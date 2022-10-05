@@ -1,8 +1,13 @@
-const mongoose = require("mongoose") // import mongoose
 
+//old way mongoose import
+//const mongoose = require("mongoose") // import mongoose
+
+const mongoose = require('./connection')
+
+// we're going to pull the Schema and model from mongoose
+// we'll use a syntax called "destructuring"
 const { Schema, model } = mongoose
-
-// fruits schema
+// schema
 const carSchema = new Schema({
     brand: String,
     name: String,
@@ -12,7 +17,9 @@ const carSchema = new Schema({
     inStock: Boolean
 })
 
+// make model
 const Car = model("cars", carSchema)
 
+//export model
 module.exports = Car
 
