@@ -4,6 +4,7 @@ const express = require("express") // import express
 const path = require("path") // import path module
 const CarRouter = require('./controllers/carControllers')
 const UserRouter = require('./controllers/userControllers')
+const CommentRouter = require('./controllers/commentControllers')
 const middleware = require("./utils/middleware")
 
 
@@ -20,6 +21,7 @@ app.get("/", (req, res) => {
 
 //register routes
 app.use('/cars', CarRouter)
+app.use('/comments', CommentRouter)
 app.use('/users', UserRouter)
 
 

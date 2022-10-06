@@ -14,7 +14,7 @@ const Cars = require('./cars')
 const db = mongoose.connection
 
 db.on('open', () => {
-    // bring in the array of starter fruits
+    // bring in the array of starter cars
     const startCars = [
         { brand: "Volvo", name: "xc90", price: 70000, color: "gray", inStock: true },
         { brand:"Honda", name: "Odyssey", price: 60000, color: "white", inStock: true },
@@ -23,16 +23,16 @@ db.on('open', () => {
         { brand:"Honda", name: "Accord", price: 49000, color: "dark-gray", inStock: true },
       ]
 
-    // delete all the existing fruits
+    // delete all the existing cars
     Cars.deleteMany({})
         .then(deletedCars => {
             console.log('this is what deleteMany returns', deletedCars)
 
-            // create a bunch of new fruits from startFruits
+            // create a bunch of new cars from cars
             // use create or deleteMany
             Cars.create(startCars)
                 .then(data => {
-                    console.log('here are the newly created fruits', data)
+                    console.log('here are new cars', data)
                     // always close connection to the db
                     db.close()
                 })
