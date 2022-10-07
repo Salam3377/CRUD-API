@@ -9,14 +9,16 @@ const middleware = require("./utils/middleware")
 
 
 //Express app object
-const app = express()
+// const app = express()
+const app = require('liquid-express-views')(express())
 
 // middleware runs before all the routes, every request is processed through our middleware before mongoose does anything with it.
 middleware(app)
 
 //Home Route
 app.get("/", (req, res) => {
-  res.send("Your server is running, better go out and catch it")
+  //res.send("Your server is running, better go out and catch it")
+  res.render('index.liquid')
 })
 
 //register routes

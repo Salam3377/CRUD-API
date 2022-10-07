@@ -1,0 +1,28 @@
+{% layout 'layout.liquid' %}
+{% block content %}
+
+  <div class="container-sm">
+    <form action="/cars" method="POST">
+      <fieldset>
+        <legend>Add New Car to Stock</legend>
+        <label class="form-label">Brand:
+        </label>
+        <input class="form-control" type="text" name="brand" placeholder="Enter Car Brand">
+        <label class="form-label">Model:
+        </label>
+        <input class="form-control" type="text" name="name" placeholder="Enter Car Model">
+        <label class="form-label">Price:
+        </label>
+        <input class="form-control" type="text" name="price" placeholder="Enter Car Price">
+        <label class="form-label">Color:
+        </label>
+        <input class="form-control" type="text" name="color" placeholder="Enter Car Color">
+        <label class="form-label">Available to Stock:
+        </label>
+        <input class="form-check-input" type="checkbox" name="inStock">
+      </fieldset>
+      <input class="btn btn-success" type="submit" value="Add New Car">
+    </form>
+  </div>
+
+{% endblock %}}
