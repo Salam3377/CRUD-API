@@ -1,0 +1,60 @@
+{% layout 'layout.liquid' %}
+{% block content %}
+    <div class="container-sm">
+        {%- comment -%} change the action {%- endcomment -%}
+        {%- comment -%} add values to input fields {%- endcomment -%}
+        {%- comment -%} add a back button {%- endcomment -%}
+        <form action="/cars/{{cars.id}}?_method=PUT" method="POST">
+            <fieldset>
+                <legend>Edit {{cars.brand}}</legend>
+                <label class="form-label">Brand: </label>
+                <input
+                    class="form-control"
+                    type="text"
+                    name="brand"
+                    placeholder="enter the brand of the car"
+                    value="{{ cars.brand }}"
+                >
+                <label class="form-label">Model: </label>
+                <input
+                    class="form-control"
+                    type="text"
+                    name="name"
+                    placeholder="enter the model of the car"
+                    value="{{ cars.name }}"
+                >
+                <label class="form-label">Price: </label>
+                <input
+                    class="form-control"
+                    type="text"
+                    name="price"
+                    placeholder="enter the price of the car"
+                    value="{{ cars.price }}"
+                >
+                <label class="form-label">Color: </label>
+                <input
+                    class="form-control"
+                    type="color"
+                    name="color"
+                    placeholder="what color is the fruit?"
+                    value="{{ cars.color }}"
+                >
+                <label class="form-label">Is car in Stock?: </label>
+                <input
+                    class="form-check-input"
+                    type="checkbox"
+                    name="inStock"
+                    {% if cars.inStock %}
+                        checked
+                    {% endif %}
+                >
+            </fieldset>
+            <input
+                class="btn btn-success"
+                type="submit"
+                value="Edit {{cars.name}}"
+            >
+        </form>
+    </div>
+
+{% endblock %}

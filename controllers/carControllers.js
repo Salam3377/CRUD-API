@@ -24,7 +24,7 @@ const router = express.Router()
         const userId = req.session.userId
         res.render('cars/index',{cars,username, loggedIn, userId})
     })
-    .catch(err => console.log(err))
+    .catch(err => res.redirect(`/error?error=${err}`))
 })
 
 //GET for new car
@@ -38,7 +38,15 @@ router.get('/new', (req, res) => {
 
 // GET request to show the update page
 router.get("/edit/:id", (req, res) => {
-    res.send('edit page')
+    const username = req.session.username
+    const loggedIn = req.session.loggedIn
+    const userId = req.session.userId
+    const carId = req.params.id
+    Cars.findById(carId)
+        .then(cars => {
+            res.render('cars/edit', {cars,username,loggedIn,userId})
+        })
+        .catch(err => { res.redirect(`/error?error=${err}`)})
 })
 
 // SHOW owner only get req
@@ -48,10 +56,9 @@ router.get('/mine', (req, res) => {
             const username = req.session.username
             const loggedIn = req.session.loggedIn
             const userId = req.session.userId
-            //res.status(200).json({ cars: cars })
             res.render('cars/index', {cars, username, loggedIn, userId})
         })
-        .catch(error => res.json(error))
+        .catch(err => res.redirect(`/error?error=${err}`))
   })
 
 // SHOW get req
@@ -63,10 +70,9 @@ router.get("/:id", (req, res) => {
         const username = req.session.username
         const loggedIn = req.session.loggedIn
         const userId = req.session.userId
-        //res.json({car: car})
         res.render('cars/show', {cars, username, loggedIn, userId})
       })
-      .catch(error => console.log(error))
+      .catch(err => res.redirect(`/error?error=${err}`))
 })
 
 
@@ -76,43 +82,41 @@ router.post("/", (req,res) => {
     req.body.owner = req.session.userId
     Cars.create(req.body)
     .then(cars => {
+        const username = req.session.username
+        const loggedIn = req.session.loggedIn
+        const userId = req.session.userId
         //res.status(201).json({car: car.toObject() })
         res.redirect('/cars')
     })
-    .catch(error => console.log(error))
+    .catch(err => res.redirect(`/error?error=${err}`))
 })
 
 
 //UPDATE put req
 router.put("/:id", (req,res) => {
     const id = req.params.id
+    req.body.inStock = req.body.inStock === 'on' ? true : false
     Cars.findById(id)
-    .then(car => {
-        if(car.owner == req.session.userId) {
-            res.sendStatus(204)
-            return car.updateOne(req.body)
+    .then(cars => {
+        if(cars.owner == req.session.userId) {
+            return cars.updateOne(req.body)
         } else {
             res.sendStatus(401)
         }
         
     })
-    .catch(err => res.json(err)) 
+    .then(() => {res.redirect(`/cars/${id}`)})
+    .catch(err => res.redirect(`/error?error=${err}`)) 
 })
 
 //DELETE
 router.delete("/:id", (req,res) => {
     const id = req.params.id
     Cars.findByIdAndRemove(id)
-    .then(car => {
+    .then(cars => {
         res.redirect('/cars')
-        // if(car.owner == req.session.userId) {
-        //     res.sendStatus(204)
-        //     return car.deleteOne()
-        // } else {
-        //     res.sendStatus(401)
-        // }
     })
-    .catch(err => res.json({err})) 
+    .catch(err => {res.redirect(`/error?error=${err}`) })
 })
 
 //Export the router

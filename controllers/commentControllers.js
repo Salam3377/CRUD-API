@@ -24,44 +24,46 @@ router.post('/:carId', (req,res) => {
         res.sendStatus(401)
     }
 
-    //find fruit
+    //find car
     Car.findById(carId)
-    .then(car => {
+    .then(cars => {
         //push comment into array
-        car.comments.push(req.body)
-        //saving fruit
-        return car.save()
+        cars.comments.push(req.body)
+        //saving car
+        return cars.save()
     })
-    .then(car => {
-        res.status(200).json({car:car})
+    .then(cars => {
+        res.redirect(`/cars/${cars.id}`)
     })
-    .catch(err => console.log(err))
+    .catch(err => res.redirect(`/error?error=${err}`))
 })
 
 // DELETE only the author of the comment can delete it
 router.delete('/delete/:carId/:commentId', (req,res) => {
     const carId = req.params.carId
     const commentId = req.params.commentId
-    //get the fruit
+    const err = 'you%20are%20not%20authorized%20for%20this%20action'
+
     Car.findById(carId)
-        .then(car => {
+        .then(cars => {
             //get the comment
-            const theComment = car.comments.id(commentId)
-            console.log('the found comment', theComment)
+            const theComment = cars.comments.id(commentId)
+            //console.log('the found comment', theComment)
             if(req.session.loggedIn) {
                 // only author can delete it
                 if(theComment.author == req.session.userId) {
                     theComment.remove()
-                    car.save()
-                    res.sendStatus(204)
+                    cars.save()
+                    res.redirect(`/cars/${cars.id}`)
                 } else {
-                    res.sendStatus(401)
+                    
+                    res.redirect(`/error?error=${err}`)
                 }
             } else {
-                res.sendStatus(401)
+                res.redirect(`/error?error=${err}`)
             }
         })
-        .catch(err => console.log(err))
+        .catch(err => res.redirect(`/error?error=${err}`))
 })
 
 

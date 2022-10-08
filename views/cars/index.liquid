@@ -1,30 +1,32 @@
 {% layout 'layout.liquid' %}
 {% block content %}
-  <div>
-    <h2 class="display-6">All Cars</h2>
-    <div class="row">
-      {% for car in cars %}
-        <div class="card">
-          <h5 class="card-header">{{car.name}}
-          </h5>
-          <div class="card-body">
-            <h5 class="card-title">
-              {% if car.inStock %}
-                In Stock
-              {% else %}
-                Out of Stock
-              {% endif %}
-            </h5>
-            <p class="card-text">Color:
-              {{car.color}}
-            </p>
-            <a class="btn btn-primary" href="/cars/{{car.id}}">
-              View
-              {{car.name}}
-            </a>
-          </div>
+  {%if cars.length > 0%}
+    <div>
+      <h2 class="display-6">All Cars</h2>
+        <div class="row">
+          {% for car in cars %}
+            <div class="card">
+              <h5 class="card-header">{{car.brand}}: {{car.name}}</h5>
+              <div class="card-body">
+                <h5 class="card-title">
+                  {% if car.inStock %}
+                    In Stock
+                  {% else %}
+                    Out of Stock
+                  {% endif %}
+                </h5>
+                <p class="card-text">Color: {{car.color}}</p>
+                <div class="colorBox" style="background-color: {{car.color}}"></div>
+                <a class="btn btn-primary" href="/cars/{{car.id}}">
+                  View
+                  {{car.name}}
+                </a>
+              </div>
+            </div>
+          {% endfor %}
         </div>
-      {% endfor %}
     </div>
-  </div>
-{% endblock %}}
+  {%else%}
+      <Div><h2 class="display-6">No cars in your inventory!</h2></Div>
+  {%endif%}
+{% endblock %}
