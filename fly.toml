@@ -11,7 +11,7 @@ processes = []
 [env]
   PORT = "8080"
   SECRET = "MySecretShouldBeDifferentAndMakeItLongUnhackableAndItIsNotPerfectButForClassUseFine"
-  DEPLOYED_URL= "mongodb+srv://Salam:Salam1234@coffeeshop.gz9sgey.mongodb.net/cars?retryWrites=true&w=majority"
+  DEPLOYED_URL= "mongodb+srv://Salam:Salam1234@cars.aqjuln9.mongodb.net/cars?retryWrites=true&w=majority"
 
 [experimental]
   allowed_public_ports = []
