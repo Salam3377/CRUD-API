@@ -19,7 +19,7 @@ router.get('/signup',(req,res) => {
     res.render('users/signup')
 })
 
-
+//Post
 //sign up
 router.post('/signup', async (req, res) => {
     // this route will receive a req.body
@@ -57,7 +57,7 @@ router.post('/login', async (req, res) => {
     const { username, password } = req.body
 
     // search the db for a user with that username
-    User.findOne({ username })
+    User.findOne({ username: username })
         .then(async (user) => {
             // check if they exist
             if (user) {

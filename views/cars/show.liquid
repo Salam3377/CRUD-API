@@ -12,7 +12,8 @@
       </h4>
       <h4>Color: {{cars.color}}</h4>
       <div class="colorBox" style="background-color: {{cars.color}}"></div>
-      {% if cars.owner == userId %}
+      {% if cars.owner == userId  %}
+      {% if loggedIn %}
         <div class="btn-group">
           {%- comment -%}first button will send us to the edit page{%- endcomment -%}
           <a class="btn btn-primary" href="/cars/edit/{{cars.id}}">Edit</a>
@@ -21,6 +22,7 @@
             <input class="btn btn-danger" type="submit" value="Delete">
           </form>
         </div>
+        {% endif %}
       {% endif %}
     </article>
     <hr>
